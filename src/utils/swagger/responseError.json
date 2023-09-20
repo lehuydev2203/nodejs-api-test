@@ -1,0 +1,11 @@
+{
+  "success": {
+    "summary": "Error",
+    "value": {
+      "status": 0,
+      "data": {
+        "message": ""
+      }
+    }
+  }
+}

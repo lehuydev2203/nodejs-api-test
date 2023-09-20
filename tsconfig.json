@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "CommonJS",
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "rootDir": "./src",
+    "esModuleInterop": true,
+    "strict": true,
+    "baseUrl": "./src/",
+    "paths": {
+      "*": ["./*"]
+    }
+  }
+}

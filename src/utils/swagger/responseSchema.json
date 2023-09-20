@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "properties": {
+    "status": {
+      "type": "number",
+      "enum": [0, 1]
+    },
+    "data": {
+      "oneOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": ["message"]
+        }
+      ]
+    }
+  }
+}
