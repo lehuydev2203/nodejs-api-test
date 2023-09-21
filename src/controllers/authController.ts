@@ -4,13 +4,22 @@ import { responseDefault, connection } from "config";
 import { responseType } from "interface";
 import { jwt, secretKey, query } from "utils";
 
+const _res: any = { ...responseDefault };
 const hashPassword = async (password: string) => {
   const saltRounds = 10;
   const _salt = await bcrypt.genSalt(saltRounds);
   const hashedPassword = await bcrypt.hash(password, _salt);
   return hashedPassword;
 };
-
+/**
+ * The login function handles the authentication process by comparing the provided username and
+ * password with the stored hashed password in the database.
+ * @param req - The `req` parameter is an object that represents the HTTP request. It has a property
+ * called `body` which contains the data sent in the request body.
+ * @param res - The `res` parameter is an object that has a `json` method. This method is used to send
+ * a JSON response to the client. The `arg0` parameter passed to the `json` method is the data that
+ * will be sent as the response.
+ */
 const login = async (
   req: { body: any },
   res: { json: (arg0: any) => void }
@@ -19,14 +28,11 @@ const login = async (
   const username = data.username;
   const providedPassword = data.password;
 
-  let _res: any = { ...responseDefault };
-
   connection.query(
     query.auth.login,
     [username],
     async (err: any, results: string | any[]) => {
       if (err) {
-        console.error("Database error:", err);
         _res.data = { message: "Internal server error" };
         res.json(_res);
         return;
@@ -67,6 +73,14 @@ const login = async (
   );
 };
 
+/**
+ * The register function takes in a request object containing user data, hashes the password, and
+ * creates a new user in the database, returning a success or error message.
+ * @param req - The `req` parameter is an object that represents the HTTP request. It has a property
+ * called `body` which contains the data sent in the request body.
+ * @param res - The `res` parameter is an object that has a `json` method. This method is used to send
+ * a JSON response to the client.
+ */
 const register = async (
   req: { body: any },
   res: { json: (arg0: any) => void }
@@ -77,7 +91,6 @@ const register = async (
     username: data.username,
     password: await hashPassword(data.password),
   };
-  let _res: responseType = { ...responseDefault };
 
   connection.query(query.auth.create, _data, (err: any, result: any) => {
     if (err) {

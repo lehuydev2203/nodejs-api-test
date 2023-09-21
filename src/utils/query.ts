@@ -6,4 +6,10 @@ export const query = {
   data: {
     get: "SELECT * FROM data",
   },
+  code: {
+    get: "SELECT * FROM codes where status=1 AND id_user= ?",
+    getDetail: "SELECT * FROM codes where id = ?",
+    create: "INSERT INTO codes (id_user, name_code, code) VALUES (?, ?, ?)",
+    delete: "UPDATE codes SET status = 1 WHERE id = ?",
+  },
 };
